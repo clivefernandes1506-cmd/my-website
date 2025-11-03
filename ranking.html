@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Leaderboard - Memory Card Game</title>
+<link rel="stylesheet" href="style.css">
+<style>
+.current-player { background: rgba(0,188,212,0.3); font-weight: bold; }
+
+/* Back to Game link color */
+a[href="play.html"] {
+  color: #ffffff; /* white text */
+  text-decoration: none;
+}
+
+a[href="play.html"]:hover {
+  color: #00ffff; /* optional hover glow */
+}
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="play.html">Play</a>
+    <a href="register.html">Register</a>
+    <a href="login.html">Login</a>
+    <a href="ranking.html">Rankings</a>
+  </nav>
+</header>
+
+<h1>🏆 Leaderboard</h1>
+
+<table id="leaderboardTable">
+  <thead>
+    <tr>
+      <th>Rank</th>
+      <th>Username</th>
+      <th>Steps</th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+</table>
+
+<a href="play.html">⬅ Back to Game</a>
+
+<script>
+const loggedUser = localStorage.getItem("loggedInUser") || "Guest";
+let leaderboard = JSON.parse(localStorage.getItem("leaderboard")) || [];
+leaderboard.sort((a,b) => a.steps - b.steps);
+
+const tbody = document.querySelector("#leaderboardTable tbody");
+
+// Medal emojis for top 3
+const medals = ['🥇','🥈','🥉'];
+
+leaderboard.forEach((player,index) => {
+  const row = document.createElement("tr");
+
+  // Add medal for top 3
+  const medal = index < 3 ? `${medals[index]}` : '';
+
+  row.innerHTML = `<td>${index+1}</td><td>${medal}${player.username}</td><td>${player.steps}</td>`;
+
+  if(player.username === loggedUser) row.classList.add("current-player");
+  tbody.appendChild(row);
+});
+</script>
+
+</body>
+</html>

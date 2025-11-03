@@ -1,0 +1,254 @@
+/* ------------------- Base Styles ------------------- */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+  background: #0d0d0d;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+}
+
+/* ------------------- Header & Navbar ------------------- */
+header {
+  text-align: center;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+header nav {
+  display: flex;
+  gap: 25px;
+  padding: 20px;
+  background: #111;
+  width: 100%;
+  justify-content: center;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+}
+
+header nav a {
+  text-decoration: none;
+  color: #fff;
+  font-weight: bold;
+  font-size: 1.1em;
+  transition: color 0.3s, text-shadow 0.3s;
+}
+
+header nav a:hover {
+  color: #00ffff;
+  text-shadow: 0 0 8px #00ffff;
+}
+
+/* ------------------- Home Page Title ------------------- */
+.logo {
+  font-size: 2.5em;
+  color: #00ffff;
+  text-shadow: 0 0 15px #00ffff;
+  margin-top: 15px; /* space between navbar and title */
+}
+
+/* ------------------- About Section (Home Page) ------------------- */
+.about-me {
+  max-width: 900px;      /* limits text width */
+  margin: 40px auto;     /* centers content horizontally */
+  padding: 0 25px;       /* side padding for comfort */
+  line-height: 1.7;      /* easier to read */
+}
+
+.about-me h2, .about-me h3 {
+  color: #00ffff;
+  text-shadow: 0 0 10px #00ffff;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.about-me ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.about-me li {
+  margin-bottom: 25px;
+  background: #111;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.2);
+}
+
+/* ------------------- Game Board ------------------- */
+#moveCounter, #matchCounter {
+  font-weight: bold;
+  font-size: 1.2em;
+  margin-right: 15px;
+  color: #ff6b81;
+  text-shadow: 0 0 10px #ff6b81, 0 0 20px #ff6b81;
+}
+
+.game-board {
+  display: grid;
+  grid-template-columns: repeat(4, 120px);
+  grid-gap: 15px;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+/* ------------------- Card Styling ------------------- */
+.card {
+  width: 120px;
+  height: 120px;
+  perspective: 1200px;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+.card .front, .card .back {
+  width: 100%;
+  height: 100%;
+  border-radius: 15px;
+  position: absolute;
+  backface-visibility: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.7s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+}
+
+.card .front {
+  background: #1c1c1c;
+  overflow: hidden;
+}
+
+.card .front img {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  transition: transform 0.3s;
+}
+
+.card .front img:hover {
+  transform: scale(1.2) rotate(10deg);
+}
+
+.card .back {
+  background: linear-gradient(135deg, #ff4757, #ff6b81);
+  transform: rotateY(180deg);
+}
+
+.card.flip .front {
+  transform: rotateY(180deg);
+}
+
+.card.flip .back {
+  transform: rotateY(0deg);
+}
+
+.card.matched .front {
+  box-shadow: 0 0 20px #00ffea, 0 0 40px #00ffea;
+  transform: scale(1.1);
+  transition: transform 0.5s, box-shadow 0.5s;
+}
+
+/* ------------------- Buttons ------------------- */
+button {
+  margin-top: 15px;
+  padding: 10px 20px;
+  border-radius: 8px;
+  background: #ff3d00;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  background: #ff6500;
+}
+
+/* ------------------- Background Animations (Play Page) ------------------- */
+body.play-page {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(to top, #222, #555);
+}
+
+.background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.road {
+  position: absolute;
+  bottom: 0;
+  width: 200%;
+  height: 150px;
+  background: url('https://i.imgur.com/fg2Z9hC.png') repeat-x;
+  background-size: contain;
+  animation: moveRoad 5s linear infinite;
+  opacity: 0.9;
+}
+
+@keyframes moveRoad {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.car {
+  position: absolute;
+  bottom: 120px;
+  width: 120px;
+  animation: drive var(--speed, 6s) linear infinite, laneShift 4s ease-in-out infinite alternate;
+}
+
+.car1 {
+  left: -150px;
+  animation-delay: 0s;
+  --speed: 6s;
+}
+
+.car2 {
+  left: -150px;
+  bottom: 160px;
+  width: 140px;
+  animation-delay: 3s;
+  --speed: 7s;
+}
+
+@keyframes drive {
+  0% { transform: translateX(0) scale(1); }
+  100% { transform: translateX(120vw) scale(1.1); }
+}
+
+@keyframes laneShift {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-15px); }
+}
+
+/* ------------------- Game Container ------------------- */
+.game-container {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  margin-top: 50px;
+}
+/* ------------------- Login/Register Text Fix ------------------- */
+.login-link, 
+.register-link, 
+p a {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+p a:hover {
+  color: #00ffff;
+  text-shadow: 0 0 8px #00ffff;}
+
+
